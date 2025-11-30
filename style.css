@@ -348,7 +348,7 @@ footer.footer-light a:hover {
 }
 
 .download-btn:hover {
-    opacity: 0.2;
+    opacity: 0.8;
 }
 
 /* box */
@@ -456,7 +456,7 @@ box1:hover,
 box2:hover,
 box3:hover {
     z-index: 100;
-    cursor: zoom-in;
+    cursor: ;
 }
 
 box1:hover img,
