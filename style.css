@@ -453,6 +453,7 @@ box3 img {
     width: 100%;
     border-radius: 6px;
     transition: transform 0.2s ease;
+    transform-origin: right center;
 }
 
 box1:hover,
