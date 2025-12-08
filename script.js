@@ -40,12 +40,12 @@ async function initializePdf(wrapper) {
         renderPage(wrapper, 1);
     } catch (error) {
         console.error(`Error loading PDF (${pdfPath}):`, error);
-        pageInfo.textContent = 'PDF could not be loaded';
+        pageInfo.textContent = 'PDF konnte nicht geladen werden';
     }
 }
 
 /**
- * Render single page to canvas
+ * Render single page to canvas with responsive scaling
  */
 async function renderPage(wrapper, pageNum) {
     const state = pdfStates.get(wrapper);
@@ -62,8 +62,18 @@ async function renderPage(wrapper, pageNum) {
         const pageInfo = wrapper.querySelector('.pdf-page-info');
         const page = await state.pdf.getPage(pageNum);
 
-        // Calculate viewport (responsive)
-        const scale = window.innerWidth < 768 ? 1.5 : 2;
+        // Responsive scale basierend auf Viewport-Breite
+        let scale = 1;
+        if (window.innerWidth >= 1024) {
+            scale = 2;           // Desktop
+        } else if (window.innerWidth >= 768) {
+            scale = 1.8;         // Tablet
+        } else if (window.innerWidth >= 480) {
+            scale = 1.2;         // iPhone 6s & kleine Tablets
+        } else {
+            scale = 0.8;         // Sehr kleine Devices
+        }
+
         const viewport = page.getViewport({ scale: scale });
 
         // Set canvas dimensions
@@ -81,7 +91,7 @@ async function renderPage(wrapper, pageNum) {
 
         // Update state
         state.currentPage = pageNum;
-        pageInfo.textContent = `Page ${pageNum} of ${state.totalPages}`;
+        pageInfo.textContent = `Seite ${pageNum} von ${state.totalPages}`;
 
         // Update button states
         updateButtonStates(wrapper);
@@ -97,7 +107,7 @@ async function renderPage(wrapper, pageNum) {
  */
 function previousPage(wrapper) {
     const state = pdfStates.get(wrapper);
-    if (state) {
+    if (state && state.currentPage > 1) {
         renderPage(wrapper, state.currentPage - 1);
     }
 }
@@ -107,7 +117,7 @@ function previousPage(wrapper) {
  */
 function nextPage(wrapper) {
     const state = pdfStates.get(wrapper);
-    if (state) {
+    if (state && state.currentPage < state.totalPages) {
         renderPage(wrapper, state.currentPage + 1);
     }
 }
@@ -120,11 +130,14 @@ function updateButtonStates(wrapper) {
     const prevBtn = wrapper.querySelector('.pdf-prev-btn');
     const nextBtn = wrapper.querySelector('.pdf-next-btn');
 
-    prevBtn.disabled = state.currentPage <= 1;
-    nextBtn.disabled = state.currentPage >= state.totalPages;
+    const isFirstPage = state.currentPage <= 1;
+    const isLastPage = state.currentPage >= state.totalPages;
 
-    prevBtn.style.opacity = state.currentPage <= 1 ? '0.5' : '1';
-    nextBtn.style.opacity = state.currentPage >= state.totalPages ? '0.5' : '1';
+    prevBtn.disabled = isFirstPage;
+    nextBtn.disabled = isLastPage;
+
+    prevBtn.style.opacity = isFirstPage ? '0.5' : '1';
+    nextBtn.style.opacity = isLastPage ? '0.5' : '1';
 }
 
 /**
@@ -139,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /**
  * Re-render PDFs on window resize for responsiveness
+ * Debounced to prevent excessive re-rendering
  */
 let resizeTimeout;
 window.addEventListener('resize', () => {
@@ -150,15 +164,11 @@ window.addEventListener('resize', () => {
     }, 250);
 });
 
-/* Right-click/Save disabled */
-document.addEventListener("contextmenu", (e) => {
-  if (e.target.tagName === "IMG") {
-    if (
-      e.target.parentElement.tagName === "BOX1" ||
-      e.target.parentElement.tagName === "BOX2" ||
-      e.target.parentElement.tagName === "BOX3"
-    ) {
-      e.preventDefault();
+/**
+ * Prevent right-click context menu on canvas elements
+ */
+document.addEventListener('contextmenu', (e) => {
+    if (e.target.tagName === 'CANVAS') {
+        e.preventDefault();
     }
-  }
 });
