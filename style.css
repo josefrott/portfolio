@@ -419,15 +419,21 @@ box:hover .background {
     font-size: 24px;
     font-weight: 600;
     letter-spacing: 0;
-    
+
     text-shadow:
-        -2px -2px 0px #000, 2px -2px 0px #000,
-        -2px 2px 0px #000, 2px 2px 0px #000,
-        0px -2px 0px #000, 0px 2px 0px #000,
-        -2px 0px 0px #000, 2px 0px 0px #000;
-    
+        -2px -2px 0px #000,
+        2px -2px 0px #000,
+        -2px 2px 0px #000,
+        2px 2px 0px #000,
+        0px -2px 0px #000,
+        0px 2px 0px #000,
+        -2px 0px 0px #000,
+        2px 0px 0px #000;
+
     opacity: 0;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
 }
 
 box:hover .centered {
@@ -774,7 +780,7 @@ text sec {
         width: 100%;
         height: auto;
     }
-    
+
     /* box1, box2, box3 */
     box1,
     box2,
@@ -821,6 +827,11 @@ text sec {
     }
 
     .pdf-iframe iframe {
-        aspect-ratio: 210 / 297;
+        width: 100%;
+        height: auto;
+        min-height: 600px;
+        object-fit: contain;
+        object-position: center;
+        aspect-ratio: auto;
     }
 }
