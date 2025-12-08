@@ -647,7 +647,9 @@ text sec {
 
     /* header */
     header {
+        height: 156px;
         grid-template-columns: 1fr;
+        padding: 0 15.6px;
     }
 
     header > div:nth-child(1),
@@ -657,6 +659,31 @@ text sec {
 
     header > nav {
         grid-column: 1;
+        padding: 0;
+    }
+
+    header img {
+        width: 62.4px;
+    }
+
+    header li {
+        padding: 0 7.8px;
+    }
+
+    /* footer */
+    footer {
+        height: 156px;
+        padding: 0 15.6px;
+    }
+
+    footer section,
+    footer nav {
+        padding: 15.6px;
+    }
+
+    footer img {
+        width: 31.2px;
+        margin: 0 7.8px;
     }
 
     /* container */
