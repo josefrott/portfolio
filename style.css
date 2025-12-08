@@ -434,7 +434,6 @@ box3 {
     position: relative;
     overflow: visible;
     z-index: 1;
-    transition: z-index 0.2s ease;
 }
 
 box1 {
@@ -452,21 +451,6 @@ box2 img,
 box3 img {
     width: 100%;
     border-radius: 6px;
-    transition: transform 0.2s ease;
-    transform-origin: right center;
-}
-
-box1:hover,
-box2:hover,
-box3:hover {
-    z-index: 100;
-    cursor:;
-}
-
-box1:hover img,
-box2:hover img,
-box3:hover img {
-    transform: scale(1.1);
 }
 
 /* iframe containers */
@@ -503,7 +487,6 @@ box3:hover img {
     height: 100%;
     border-radius: 6px;
 }
-
 /* text */
 text {
     grid-area: text;
@@ -556,6 +539,8 @@ text sec {
         gap: 12px;
         max-width: 312px;
         margin: 0 auto;
+        padding: 0 12px;
+        box-sizing: border-box;
     }
 
     /* contentIndex */
@@ -642,7 +627,8 @@ text sec {
     header {
         height: 156px;
         grid-template-columns: 1fr;
-        padding: 0 15.6px;
+        padding: 0 12px;
+        box-sizing: border-box;
     }
 
     header > div:nth-child(1),
@@ -666,7 +652,8 @@ text sec {
     /* footer */
     footer {
         height: 156px;
-        padding: 0 15.6px;
+        padding: 0 12px;
+        box-sizing: border-box;
     }
 
     footer section,
@@ -688,8 +675,11 @@ text sec {
     /* box */
     box img {
         opacity: 1;
+        max-width: 100%;
+        width: 100%;
+        height: auto;
     }
-
+    
     /* box1; box2; box3 */
     box1,
     box2,
@@ -701,16 +691,19 @@ text sec {
     .box1,
     .box2,
     .box3 {
-        width: auto;
+        width: 100%;
         height: 312px;
+        box-sizing: border-box;
     }
 
     /* text */
     text {
         height: auto;
+        box-sizing: border-box;
     }
 
     text p {
         font-weight: bold;
     }
+}
 }
