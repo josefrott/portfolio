@@ -9,6 +9,8 @@
         <title>Numerische Simulation | 2024</title>
         <link rel="stylesheet" href="style.css" />
         <link rel="icon" type="image/png" href="favicon.png" />
+        <!-- PDF.js Library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     </head>
 
     <body>
@@ -25,14 +27,43 @@
                 <div></div>
             </header>
 
-            <div class="box1">
-                <iframe src="pdf/2023_NumSim_Group8_Paper1_Joseph+Rott.pdf"></iframe>
+            <!-- PDF 1 -->
+            <div class="pdf-wrapper">
+                <div class="pdf-container">
+                    <div class="pdf-controls">
+                        <button class="pdf-prev-btn">← Zurück</button>
+                        <span class="pdf-page-info">Seite 1 von X</span>
+                        <button class="pdf-next-btn">Weiter →</button>
+                    </div>
+                    <canvas class="pdf-canvas"></canvas>
+                </div>
+                <input type="hidden" class="pdf-path" value="pdf/2023_NumSim_Group8_Paper1_Joseph+Rott.pdf" />
             </div>
-            <div class="box2">
-                <iframe src="pdf/2023_NumSim_Group8_Paper2_Joseph+Rott.pdf"></iframe>
+
+            <!-- PDF 2 -->
+            <div class="pdf-wrapper">
+                <div class="pdf-container">
+                    <div class="pdf-controls">
+                        <button class="pdf-prev-btn">← Zurück</button>
+                        <span class="pdf-page-info">Seite 1 von X</span>
+                        <button class="pdf-next-btn">Weiter →</button>
+                    </div>
+                    <canvas class="pdf-canvas"></canvas>
+                </div>
+                <input type="hidden" class="pdf-path" value="pdf/2023_NumSim_Group8_Paper2_Joseph+Rott.pdf" />
             </div>
-            <div class="box3">
-                <iframe src="pdf/2024_NumSim_Group8_Paper3_Joseph+Rott.pdf"></iframe>
+
+            <!-- PDF 3 -->
+            <div class="pdf-wrapper">
+                <div class="pdf-container">
+                    <div class="pdf-controls">
+                        <button class="pdf-prev-btn">← Zurück</button>
+                        <span class="pdf-page-info">Seite 1 von X</span>
+                        <button class="pdf-next-btn">Weiter →</button>
+                    </div>
+                    <canvas class="pdf-canvas"></canvas>
+                </div>
+                <input type="hidden" class="pdf-path" value="pdf/2024_NumSim_Group8_Paper3_Joseph+Rott.pdf" />
             </div>
 
             <text>
@@ -52,7 +83,7 @@
                         geübt.
                     </p>
                     <p class="english">
-                        ⬤ This module provides an introduction to the theoretical and practical fundamentals of
+                        ⬌ This module provides an introduction to the theoretical and practical fundamentals of
                         numerical simulation methods and their use in building design and the sustainable optimization
                         of products in the construction industry. During the course, simulation programs for
                         steady-state and transient calculation methods for building design will be presented, and the

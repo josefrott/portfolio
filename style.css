@@ -18,7 +18,7 @@
         url("Fonts/5423411/3a7daddb-0a78-4734-a699-6fe08d0e8b99.ttf") format("truetype");
 }
 
-/* This CSS resource incorporates links to font software which is the valuable copyrighted property of Monotype and/or its suppliers. You may not attempt to copy, install, redistribute, convert, modify or reverse engineer this font software. Please contact Monotype with any questions regarding Web Fonts: http://www.fontshop.com */
+/* This CSS resource incorporates links to font software which is the valuable copyrighted property of Monotype and/or its suppliers. You may not attempt to copy, install, redistribute, convert, modify or reverse engineer this font software. Please contact Monotype with any questions regarding Web Fonts: [http://www.fontshop.com](http://www.fontshop.com) */
 
 /* body #CFE1EF */
 body {
@@ -338,8 +338,8 @@ footer.footer-light a:hover {
 .download-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 12px;
+    gap: 8px;
+    padding: 10px 16px;
     background: #000;
     color: #fff;
     border-radius: 6px;
@@ -348,7 +348,14 @@ footer.footer-light a:hover {
 }
 
 .download-btn:hover {
-    opacity: 0.2;
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* box */
@@ -453,40 +460,6 @@ box3 img {
     border-radius: 6px;
 }
 
-/* iframe containers */
-.box1,
-.box2,
-.box3 {
-    height: 636px;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.box1 {
-    grid-area: box1;
-    width: 100%;
-}
-.box2 {
-    grid-area: box2;
-    width: 100%;
-}
-.box3 {
-    grid-area: box3;
-    width: 100%;
-}
-
-.box1 iframe,
-.box2 iframe,
-.box3 iframe {
-    border: none;
-    width: 100%;
-    height: 100%;
-    border-radius: 6px;
-}
 /* text */
 text {
     grid-area: text;
@@ -510,23 +483,141 @@ text sec {
     color: #a1a1a0;
 }
 
-/* invert */
-.invert {
-    filter: invert(100%);
-    opacity: 1;
+/* /* ============================================
+   PDF Container Styles
+   ============================================ */
+
+.pdf-wrapper:nth-of-type(1) {
+    grid-area: box1;
 }
 
-@keyframes fadeInUp {
-    from {
-        transform: translateY(40px);
+.pdf-wrapper:nth-of-type(2) {
+    grid-area: box2;
+}
+
+.pdf-wrapper:nth-of-type(3) {
+    grid-area: box3;
+}
+
+.pdf-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    gap: 12px;
+}
+
+.pdf-page-info {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.pdf-prev-btn,
+.pdf-next-btn {
+    padding: 8px 16px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    font-family: "Mark W01 Regular", sans-serif;
+}
+
+.pdf-prev-btn:hover,
+.pdf-next-btn:hover {
+    filter: brightness(0.8);
+    transform: scale(1.05);
+}
+
+.pdf-prev-btn:active,
+.pdf-next-btn:active {
+    transform: scale(0.98);
+}
+
+.pdf-prev-btn:disabled,
+.pdf-next-btn:disabled {
+    background: #808080;
+    cursor: not-allowed;
+}
+
+.pdf-canvas {
+    flex: 1;
+    margin: 0 auto;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    min-height: 400px;
+}
+
+/* ============================================
+   PDF Iframe Styles (simple display)
+   ============================================ */
+
+.pdf-interactive .pdf-container {
+    height: auto;
+}
+
+.pdf-iframe .pdf-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-iframe iframe {
+    border: none;
+    width: 100%;
+    aspect-ratio: 210 / 297;
+    border-radius: 6px;
+}
+
+/* Mobile responsive */
+@media screen and (max-width: 760px) {
+    .pdf-interactive .pdf-container {
+        height: auto;
     }
-    to {
-        transform: translateY(0);
-        opacity: 1;
+
+    .pdf-iframe .pdf-container {
+        width: 100%;
+    }
+
+    .pdf-iframe iframe {
+        aspect-ratio: 210 / 297;
+    }
+
+    .pdf-canvas {
+        min-height: 300px;
     }
 }
 
-/* media queries */
+/* ============================================
+   Media Queries
+   ============================================ */
+
 @media screen and (max-width: 760px) {
     /* contentIndex, contentArchitektur, contentKlimadesign, contentPage */
     #contentIndex,
@@ -680,20 +771,11 @@ text sec {
         height: auto;
     }
     
-    /* box1; box2; box3 */
+    /* box1, box2, box3 */
     box1,
     box2,
     box3 {
         height: 312px;
-    }
-
-    /* iframe */
-    .box1,
-    .box2,
-    .box3 {
-        width: 100%;
-        height: 312px;
-        box-sizing: border-box;
     }
 
     /* text */
@@ -705,5 +787,6 @@ text sec {
     text p {
         font-weight: bold;
     }
-}
+    
+    
 }
