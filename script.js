@@ -1,5 +1,6 @@
 /* ============================================
    PDF.js Integration for Portfolio PDFs
+   Optimiert für scharfe Darstellung
    ============================================ */
 
 // Setup PDF.js worker
@@ -21,8 +22,12 @@ async function initializePdf(wrapper) {
     const nextBtn = wrapper.querySelector('.pdf-next-btn');
 
     try {
-        // Load PDF document
-        const pdf = await pdfjsLib.getDocument(pdfPath).promise;
+        // Load PDF document with optimized settings
+        const pdf = await pdfjsLib.getDocument({
+            url: pdfPath,
+            cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+            cMapPacked: true,
+        }).promise;
         
         // Store state for this PDF instance
         pdfStates.set(wrapper, {
@@ -45,7 +50,7 @@ async function initializePdf(wrapper) {
 }
 
 /**
- * Render single page to canvas with responsive scaling
+ * Render single page to canvas with high quality and responsive scaling
  */
 async function renderPage(wrapper, pageNum) {
     const state = pdfStates.get(wrapper);
@@ -65,48 +70,54 @@ async function renderPage(wrapper, pageNum) {
 
         // Get actual container width for responsive scaling
         const containerWidth = container.clientWidth;
+        
+        // Device Pixel Ratio für High-DPI Displays (Retina, etc.)
+        const devicePixelRatio = window.devicePixelRatio || 1;
 
-        // Calculate scale based on container width, not window width
-        let scale = 1;
-        if (containerWidth > 800) {
-            scale = 1.5;  // Desktop
-        } else if (containerWidth > 600) {
-            scale = 1.2;  // Tablet
+        // Basis-Scale basierend auf Container-Breite
+        let baseScale = 1.5;
+        if (containerWidth <= 600) {
+            baseScale = 1.2;  // Mobile
+        } else if (containerWidth <= 800) {
+            baseScale = 1.5;  // Tablet
         } else {
-            scale = 1;    // Mobile
+            baseScale = 2.0;  // Desktop: höhere Qualität
         }
 
-        const viewport = page.getViewport({ scale: scale });
+        // Multipliziere mit Device Pixel Ratio für echte Auflösung
+        const effectiveScale = baseScale * devicePixelRatio;
+        
+        const viewport = page.getViewport({ scale: effectiveScale });
 
-        // CRITICAL: Canvas must never exceed container width
-        let canvasWidth = viewport.width;
-        if (canvasWidth > containerWidth) {
-            // Recalculate scale to fit container
-            scale = scale * (containerWidth / canvasWidth);
-            const newViewport = page.getViewport({ scale: scale });
-            canvas.height = newViewport.height;
-            canvas.width = newViewport.width;
-        } else {
-            // Set canvas dimensions directly
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-        }
+        // Setze Canvas-Größe (in echter Pixelauflösung)
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
 
-        // Render page to canvas
-        const context = canvas.getContext('2d');
+        // Setze CSS-Größe für Display (skaliert zurück auf logische Pixel)
+        canvas.style.width = (viewport.width / devicePixelRatio) + 'px';
+        canvas.style.height = (viewport.height / devicePixelRatio) + 'px';
+
+        // Rendering Context mit Antialiasing
+        const context = canvas.getContext('2d', { 
+            alpha: false,
+            willReadFrequently: false 
+        });
+        
         const renderContext = {
             canvasContext: context,
-            viewport: canvas.width === viewport.width ? viewport : page.getViewport({ scale: scale })
+            viewport: viewport
         };
 
+        // Render PDF page to canvas
         await page.render(renderContext).promise;
 
         // Update state with current page
         state.currentPage = pageNum;
-        pageInfo.textContent = `Page ${pageNum} of ${state.totalPages}`;
+        pageInfo.textContent = `Seite ${pageNum} von ${state.totalPages}`;
 
         // Update button states based on current page
         updateButtonStates(wrapper);
+
     } catch (error) {
         console.error('Error rendering page:', error);
     } finally {
