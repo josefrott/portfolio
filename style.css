@@ -595,30 +595,17 @@ text sec {
     border-radius: 6px;
 }
 
-/* Mobile responsive */
-@media screen and (max-width: 760px) {
-    .pdf-interactive .pdf-container {
-        height: auto;
-    }
-
-    .pdf-iframe .pdf-container {
-        width: 100%;
-    }
-
-    .pdf-iframe iframe {
-        aspect-ratio: 210 / 297;
-    }
-
-    .pdf-canvas {
-        min-height: 300px;
-    }
-}
-
 /* ============================================
    Media Queries
    ============================================ */
 
 @media screen and (max-width: 760px) {
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+    }
+
     /* contentIndex, contentArchitektur, contentKlimadesign, contentPage */
     #contentIndex,
     #contentArchitektur,
@@ -787,6 +774,36 @@ text sec {
     text p {
         font-weight: bold;
     }
-    
-    
+
+    /* PDF Mobile Fix  */
+    .pdf-wrapper {
+        overflow: hidden;
+    }
+
+    .pdf-container {
+        padding: 12px 0;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+
+    .pdf-canvas {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100% !important;
+        min-height: 300px;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+    .pdf-interactive .pdf-container {
+        height: auto;
+    }
+
+    .pdf-iframe .pdf-container {
+        width: 100%;
+    }
+
+    .pdf-iframe iframe {
+        aspect-ratio: 210 / 297;
+    }
 }
