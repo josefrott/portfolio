@@ -24,7 +24,7 @@ async function initializePdf(wrapper) {
         // Load PDF document
         const pdf = await pdfjsLib.getDocument(pdfPath).promise;
         
-        // Store state
+        // Store state for this PDF instance
         pdfStates.set(wrapper, {
             pdf: pdf,
             currentPage: 1,
@@ -32,7 +32,7 @@ async function initializePdf(wrapper) {
             totalPages: pdf.numPages
         });
 
-        // Attach event listeners
+        // Attach event listeners to navigation buttons
         prevBtn.addEventListener('click', () => previousPage(wrapper));
         nextBtn.addEventListener('click', () => nextPage(wrapper));
 
@@ -40,7 +40,7 @@ async function initializePdf(wrapper) {
         renderPage(wrapper, 1);
     } catch (error) {
         console.error(`Error loading PDF (${pdfPath}):`, error);
-        pageInfo.textContent = 'PDF konnte nicht geladen werden';
+        pageInfo.textContent = 'PDF could not be loaded';
     }
 }
 
@@ -51,7 +51,7 @@ async function renderPage(wrapper, pageNum) {
     const state = pdfStates.get(wrapper);
     if (!state) return;
 
-    // Validate page number
+    // Validate page number is within range
     if (pageNum < 1 || pageNum > state.totalPages) return;
     if (state.isRendering) return;
 
@@ -59,41 +59,53 @@ async function renderPage(wrapper, pageNum) {
 
     try {
         const canvas = wrapper.querySelector('.pdf-canvas');
+        const container = wrapper.querySelector('.pdf-container');
         const pageInfo = wrapper.querySelector('.pdf-page-info');
         const page = await state.pdf.getPage(pageNum);
 
-        // Responsive scale basierend auf Viewport-Breite
+        // Get actual container width for responsive scaling
+        const containerWidth = container.clientWidth;
+
+        // Calculate scale based on container width, not window width
         let scale = 1;
-        if (window.innerWidth >= 1024) {
-            scale = 2;           // Desktop
-        } else if (window.innerWidth >= 768) {
-            scale = 1.8;         // Tablet
-        } else if (window.innerWidth >= 480) {
-            scale = 1.2;         // iPhone 6s & kleine Tablets
+        if (containerWidth > 800) {
+            scale = 1.5;  // Desktop
+        } else if (containerWidth > 600) {
+            scale = 1.2;  // Tablet
         } else {
-            scale = 0.8;         // Sehr kleine Devices
+            scale = 1;    // Mobile
         }
 
         const viewport = page.getViewport({ scale: scale });
 
-        // Set canvas dimensions
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
+        // CRITICAL: Canvas must never exceed container width
+        let canvasWidth = viewport.width;
+        if (canvasWidth > containerWidth) {
+            // Recalculate scale to fit container
+            scale = scale * (containerWidth / canvasWidth);
+            const newViewport = page.getViewport({ scale: scale });
+            canvas.height = newViewport.height;
+            canvas.width = newViewport.width;
+        } else {
+            // Set canvas dimensions directly
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+        }
 
         // Render page to canvas
         const context = canvas.getContext('2d');
         const renderContext = {
             canvasContext: context,
-            viewport: viewport
+            viewport: canvas.width === viewport.width ? viewport : page.getViewport({ scale: scale })
         };
 
         await page.render(renderContext).promise;
 
-        // Update state
+        // Update state with current page
         state.currentPage = pageNum;
-        pageInfo.textContent = `Seite ${pageNum} von ${state.totalPages}`;
+        pageInfo.textContent = `Page ${pageNum} of ${state.totalPages}`;
 
-        // Update button states
+        // Update button states based on current page
         updateButtonStates(wrapper);
     } catch (error) {
         console.error('Error rendering page:', error);
@@ -123,7 +135,7 @@ function nextPage(wrapper) {
 }
 
 /**
- * Enable/Disable navigation buttons based on current page
+ * Enable or disable navigation buttons based on current page position
  */
 function updateButtonStates(wrapper) {
     const state = pdfStates.get(wrapper);

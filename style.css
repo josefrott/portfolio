@@ -640,7 +640,7 @@ text sec {
         gap: 12px;
         max-width: 312px;
         margin: 0 auto;
-        padding: 0 12px;
+        padding: 0;
         box-sizing: border-box;
     }
 
@@ -813,7 +813,7 @@ text sec {
         width: 100% !important;
         height: auto !important;
         max-width: 100% !important;
-        min-height: 300px;
+        min-height: 312px;
         margin: 0 auto;
         box-sizing: border-box;
     }
