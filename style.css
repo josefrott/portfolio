@@ -396,17 +396,28 @@ box:hover .background {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1); /* === 1 */
-    --stroke-width: 2px;
+    transform: translate(-50%, -50%) scale(1);
     color: #fff;
     font-size: 20px;
-    font-weight: 400;
-    -webkit-text-stroke: var(--stroke-width) #000;
-    paint-order: stroke fill;
+    font-weight: 600;
+    letter-spacing: 0;
+    
+    text-shadow:
+        -2px -2px 0px #000, 2px -2px 0px #000,
+        -2px 2px 0px #000, 2px 2px 0px #000,
+        0px -2px 0px #000, 0px 2px 0px #000,
+        -2px 0px 0px #000, 2px 0px 0px #000,
+        -1px -2px 0px #000, 1px -2px 0px #000,
+        -1px 2px 0px #000, 1px 2px 0px #000,
+        -2px -1px 0px #000, 2px -1px 0px #000,
+        -2px 1px 0px #000, 2px 1px 0px #000,
+        -1px -1px 0px #000, 1px -1px 0px #000,
+        -1px 1px 0px #000, 1px 1px 0px #000,
+        -2px 0px 0px #000, 0px -2px 0px #000,
+        2px 0px 0px #000, 0px 2px 0px #000;
+    
     opacity: 0;
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 box:hover .centered {
