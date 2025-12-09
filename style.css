@@ -518,115 +518,90 @@ text sec {
 }
 
 /* ============================================
-   PDF Container Styles
-   ============================================ */
+PDF Container Styles
+============================================ */
 
 .pdf-wrapper:nth-of-type(1) {
-    grid-area: box1;
+grid-area: box1;
 }
 
 .pdf-wrapper:nth-of-type(2) {
-    grid-area: box2;
+grid-area: box2;
 }
 
 .pdf-wrapper:nth-of-type(3) {
-    grid-area: box3;
+grid-area: box3;
 }
 
 .pdf-container {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+width: 100%;
+height: auto;
+display: flex;
+flex-direction: column;
+background: #fff;
+border-radius: 6px;
+overflow: hidden;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .pdf-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    background: #f5f5f5;
-    border-bottom: 1px solid #ddd;
-    gap: 12px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 12px;
+background: #f5f5f5;
+border-bottom: 1px solid #ddd;
+gap: 12px;
 }
 
 .pdf-page-info {
-    font-size: 14px;
-    color: #333;
-    font-weight: 500;
-    flex: 1;
-    text-align: center;
-    white-space: nowrap;
+font-size: 14px;
+color: #333;
+font-weight: 500;
+flex: 1;
+text-align: center;
+white-space: nowrap;
 }
 
 .pdf-prev-btn,
 .pdf-next-btn {
-    padding: 8px 16px;
-    background: #000;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: bold;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-    font-family: "Mark W01 Regular", sans-serif;
+padding: 8px 16px;
+background: #000;
+color: #fff;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+font-size: 12px;
+font-weight: bold;
+transition: all 0.2s ease;
+flex-shrink: 0;
+font-family: "Mark W01 Regular", sans-serif;
 }
 
 .pdf-prev-btn:hover,
 .pdf-next-btn:hover {
-    filter: brightness(0.8);
-    transform: scale(1.05);
+filter: brightness(0.8);
+transform: scale(1.05);
 }
 
 .pdf-prev-btn:active,
 .pdf-next-btn:active {
-    transform: scale(0.98);
+transform: scale(0.98);
 }
 
 .pdf-prev-btn:disabled,
 .pdf-next-btn:disabled {
-    background: #808080;
-    cursor: not-allowed;
+background: #808080;
+cursor: not-allowed;
 }
 
 .pdf-canvas {
-    flex: 1;
-    margin: 0 auto;
-    display: block;
-    max-width: 100%;
-    height: auto;
-    min-height: 400px;
-}
-
-/* ============================================
-   PDF Iframe Styles (simple display)
-   ============================================ */
-
-.pdf-interactive .pdf-container {
-    height: auto;
-}
-
-.pdf-iframe .pdf-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.pdf-iframe iframe {
-    border: none;
-    width: 100%;
-    aspect-ratio: 210 / 297;
-    border-radius: 6px;
+flex: 1;
+margin: 0 auto;
+display: block;
+max-width: 100%;
+height: auto;
+min-height: 400px;
 }
 
 /* ============================================
@@ -823,34 +798,28 @@ text sec {
     }
 
     .pdf-container {
-        padding: 12px 0;
-        overflow-x: hidden;
-        box-sizing: border-box;
+        width: 100%;
+        min-height: 500px;
+        max-height: 800px; /* ← Maximale Höhe für Container */
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border-radius: 6px;
+        overflow: auto; /* ← Scrollbar bei Bedarf */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
     }
 
     .pdf-canvas {
-        width: 100% !important;
-        height: auto !important;
-        max-width: 100% !important;
-        min-height: 312px;
+        flex: 1;
         margin: 0 auto;
-        box-sizing: border-box;
+        display: block;
+        width: auto; /* ← Width nicht limitieren */
+        height: auto;
+        min-width: 100%; /* ← Aber minimal 100% breit */
     }
 
     .pdf-interactive .pdf-container {
         height: auto;
-    }
-
-    .pdf-iframe .pdf-container {
-        width: 100%;
-    }
-
-    .pdf-iframe iframe {
-        width: 100%;
-        height: auto;
-        min-height: 600px;
-        object-fit: contain;
-        object-position: center;
-        aspect-ratio: auto;
     }
 }
