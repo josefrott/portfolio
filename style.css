@@ -18,14 +18,6 @@
         url("Fonts/5423411/3a7daddb-0a78-4734-a699-6fe08d0e8b99.ttf") format("truetype");
 }
 
-/* This CSS resource incorporates links to font software which is the valuable copyrighted property of Monotype and/or its suppliers. You may not attempt to copy, install, redistribute, convert, modify or reverse engineer this font software. Please contact Monotype with any questions regarding Web Fonts: [http://www.fontshop.com](http://www.fontshop.com) */
-
-/* Global Mobile Fix */
-html {
-    overflow-x: hidden;
-    width: 100%;
-}
-
 /* body #CFE1EF */
 body {
     margin: 0;
@@ -183,13 +175,14 @@ header {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
+    gap: 12px;
 }
 
 /* logo link */
 header > div:nth-child(1) a {
     display: flex;
     align-items: center;
-    padding-left: 130px;
+    justify-content: center;
 }
 
 /* middle - navigation */
@@ -275,7 +268,7 @@ footer nav {
 
 footer img {
     width: 26px;
-    margin: 0 6x;
+    margin: 0 13px;
     transition: 0.2s ease;
     will-change: transform, opacity;
 }
@@ -302,11 +295,6 @@ footer .current a {
     color: #000;
 }
 
-/* nested2 */
-.nested2 img {
-    padding: 0;
-}
-
 /* footer-light */
 footer.footer-light a {
     color: #fff;
@@ -322,7 +310,7 @@ footer.footer-light a:hover {
 }
 
 .nested2 img {
-    padding: 0 13px;
+    padding: 13 px;
 }
 
 /* links */
