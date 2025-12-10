@@ -13,8 +13,20 @@
 
     <body class="index-light">
         <script>
-            const colors = ["#80643F", "#3E2022" , "#191E28", "#303D3A", "#0E0E10"];
-            document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            const colors = ["#80643F", "#3E2022", "#191E28", "#303D3A", "#0E0E10"];
+
+            const lastColor = sessionStorage.getItem("lastBgColor");
+
+            let availableColors = colors;
+            if (lastColor && colors.includes(lastColor)) {
+                availableColors = colors.filter((color) => color !== lastColor);
+            }
+
+            const randomColor = availableColors[Math.floor(Math.random() * availableColors.length)];
+
+            document.body.style.backgroundColor = randomColor;
+
+            sessionStorage.setItem("lastBgColor", randomColor);
         </script>
 
         <div id="contentIndex">
