@@ -604,6 +604,102 @@ height: auto;
 min-height: 400px;
 }
 
+/* Tablet (≤ 1024px) */
+@media (max-width: 1024px) {
+  .pdf-canvas {
+    min-height: 350px;
+  }
+
+  .pdf-prev-btn,
+  .pdf-next-btn {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+}
+
+/* Small Tablet / Large Mobile (≤ 768px) */
+@media (max-width: 768px) {
+  .pdf-controls {
+    padding: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .pdf-page-info {
+    font-size: 12px;
+    flex-basis: 100%;
+    order: 3;
+  }
+
+  .pdf-prev-btn,
+  .pdf-next-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+    flex: 1;
+  }
+
+  .pdf-canvas {
+    min-height: 300px;
+  }
+}
+
+/* Mobile (≤ 480px) */
+@media (max-width: 480px) {
+  .pdf-controls {
+    padding: 8px;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .pdf-page-info {
+    font-size: 11px;
+    flex-basis: 100%;
+    order: 3;
+    margin-top: 8px;
+  }
+
+  .pdf-prev-btn,
+  .pdf-next-btn {
+    padding: 6px 10px;
+    font-size: 10px;
+    flex: 1;
+    min-width: 70px;
+  }
+
+  .pdf-canvas {
+    min-height: 250px;
+  }
+
+  .pdf-container {
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Extra Small Mobile (≤ 360px) */
+@media (max-width: 360px) {
+  .pdf-controls {
+    padding: 6px;
+    gap: 4px;
+  }
+
+  .pdf-prev-btn,
+  .pdf-next-btn {
+    padding: 5px 8px;
+    font-size: 9px;
+    min-width: 60px;
+  }
+
+  .pdf-page-info {
+    font-size: 10px;
+  }
+
+  .pdf-canvas {
+    min-height: 200px;
+  }
+}
+
 /* ============================================
    Media Queries
    ============================================ */
@@ -790,36 +886,5 @@ min-height: 400px;
 
     text p {
         font-weight: bold;
-    }
-
-    /* PDF Mobile Fix */
-    .pdf-wrapper {
-        overflow: hidden;
-    }
-
-    .pdf-container {
-        width: 100%;
-        min-height: 500px;
-        max-height: 800px; /* ← Maximale Höhe für Container */
-        display: flex;
-        flex-direction: column;
-        background: #fff;
-        border-radius: 6px;
-        overflow: auto; /* ← Scrollbar bei Bedarf */
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        position: relative;
-    }
-
-    .pdf-canvas {
-        flex: 1;
-        margin: 0 auto;
-        display: block;
-        width: auto; /* ← Width nicht limitieren */
-        height: auto;
-        min-width: 100%; /* ← Aber minimal 100% breit */
-    }
-
-    .pdf-interactive .pdf-container {
-        height: auto;
-    }
+    }    
 }

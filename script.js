@@ -1,4 +1,101 @@
 /* ============================================
+UNIVERSAL CONTENT PROTECTION
+Schützt alle Bilder & PDFs vor Right-Click Download
+============================================ */
+
+/**
+ * Starte Schutz SOFORT - nicht warten auf DOMContentLoaded
+ */
+(function initProtection() {
+  /**
+   * Blockiere Right-Click global
+   */
+  document.addEventListener('contextmenu', (e) => {
+    // Erlaubt Right-Click NUR auf Input & Textarea
+    const allowedTags = ['INPUT', 'TEXTAREA'];
+    
+    if (!allowedTags.includes(e.target.tagName)) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      showProtectionMessage(e);
+      return false;
+    }
+  }, true);
+
+  /**
+   * Blockiere Drag & Drop für Bilder
+   */
+  document.addEventListener('dragstart', (e) => {
+    if (e.target.tagName === 'IMG' || e.target.tagName === 'CANVAS') {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, true);
+
+  /**
+   * Blockiere DevTools
+   */
+  document.addEventListener('keydown', (e) => {
+    const isDevToolsKey = 
+      e.key === 'F12' ||
+      (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+      (e.ctrlKey && e.shiftKey && e.key === 'C') ||
+      (e.metaKey && e.altKey && e.key === 'I') ||
+      (e.metaKey && e.shiftKey && e.key === 'C');
+
+    if (isDevToolsKey) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, true);
+
+  /**
+   * Zeige Schutz-Nachricht
+   */
+  function showProtectionMessage(event) {
+    const message = document.createElement('div');
+    message.textContent = '© 2025 Josef Rott';
+    message.style.cssText = `
+      position: fixed;
+      left: ${event.clientX}px;
+      top: ${event.clientY}px;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      pointer-events: none;
+      z-index: 10000;
+      animation: fadeOut 2s ease-out forwards;
+      font-weight: 500;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    `;
+
+    document.body.appendChild(message);
+
+    // Füge Animation einmalig hinzu
+    if (!document.querySelector('style[data-protection="true"]')) {
+      const style = document.createElement('style');
+      style.setAttribute('data-protection', 'true');
+      style.textContent = `
+        @keyframes fadeOut {
+          0% { opacity: 1; transform: translateY(0); }
+          100% { opacity: 0; transform: translateY(-30px); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    setTimeout(() => message.remove(), 2000);
+  }
+
+  console.log('✓ Content Protection aktiviert');
+})(); 
+
+/* ============================================
 PDF.js Integration for Portfolio PDFs
 Optimiert für scharfe Darstellung
 ============================================ */
@@ -185,13 +282,4 @@ pdfStates.forEach((state, wrapper) => {
 renderPage(wrapper, state.currentPage);
 });
 }, 250);
-});
-
-/**
-* Prevent right-click context menu on canvas elements
-*/
-document.addEventListener('contextmenu', (e) => {
-if (e.target.tagName === 'CANVAS') {
-e.preventDefault();
-}
 });
