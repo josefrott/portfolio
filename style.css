@@ -304,14 +304,7 @@ footer.footer-light a:hover {
     color: #000;
 }
 
-/* nested & nested2 */
-.nested img {
-    margin: 26px;
-}
 
-.nested2 img {
-    padding: 13 px;
-}
 
 /* links */
 header a,
@@ -810,9 +803,7 @@ min-height: 400px;
 
     /* header */
     header {
-        height: 156px;
         grid-template-columns: 1fr;
-        padding: 0 12px;
         box-sizing: border-box;
     }
 
@@ -826,34 +817,8 @@ min-height: 400px;
         padding: 0;
     }
 
-    header img {
-        width: 62.4px;
-    }
-
-    header li {
-        padding: 0 7.8px;
-    }
-
-    /* footer */
-    footer {
-        height: 156px;
-        padding: 0 12px;
-        box-sizing: border-box;
-    }
-
-    footer section,
-    footer nav {
-        padding: 15.6px;
-    }
-
-    footer img {
-        width: 31.2px;
-        margin: 0 7.8px;
-    }
-
     /* container */
     .centered {
-        font-weight: bold;
         opacity: 1;
     }
 
@@ -879,6 +844,6 @@ min-height: 400px;
     }
 
     text p {
-        font-weight: bold;
+        font-size: 16px
     }    
 }
