@@ -344,7 +344,7 @@ PDF Zoom Feature - Ctrl+Scroll in Box
 
     // Neue Zoom-Level
     const isZoomIn = e.deltaY < 0;
-    const zoomStep = 0.05;
+    const zoomStep = 0.15;
     const minZoom = 0.5;
     const maxZoom = 4;
 
