@@ -50,7 +50,7 @@ Schützt alle Bilder & PDFs vor Right-Click Download
       e.stopPropagation();
       return false;
     }
-  }, true);
+  }, true); 
 
   /**
    * Zeige Schutz-Nachricht
@@ -283,3 +283,182 @@ renderPage(wrapper, state.currentPage);
 });
 }, 250);
 });
+
+/* ============================================
+PDF Zoom Feature - Ctrl+Scroll in Box
+============================================ */
+
+(function initPDFZoom() {
+  const zoomData = new Map();
+
+  /**
+   * Warte bis PDFs geladen sind, dann initialisiere Zoom
+   */
+  function setupCanvasZoom() {
+    const canvases = document.querySelectorAll('.pdf-canvas');
+    
+    if (canvases.length === 0) {
+      // Versuche später nochmal
+      setTimeout(setupCanvasZoom, 500);
+      return;
+    }
+
+    canvases.forEach((canvas) => {
+      // Speichere Original-Dimensionen VOR dem Rendern
+      zoomData.set(canvas, {
+        zoom: 1,
+        mouseX: 0,
+        mouseY: 0
+      });
+    });
+
+    console.log(`✓ Zoom initialisiert für ${canvases.length} PDFs`);
+  }
+
+  /**
+   * Ctrl+Scroll Zoom
+   */
+  document.addEventListener('wheel', (e) => {
+    if (!e.ctrlKey) return;
+
+    let canvas = null;
+
+    // Finde Canvas
+    if (e.target.tagName === 'CANVAS') {
+      canvas = e.target;
+    } else {
+      return;
+    }
+
+    if (!canvas || !zoomData.has(canvas)) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const data = zoomData.get(canvas);
+    const container = canvas.closest('.pdf-container');
+
+    if (!container) return;
+
+    const currentZoom = data.zoom;
+
+    // Neue Zoom-Level
+    const isZoomIn = e.deltaY < 0;
+    const zoomStep = 0.05;
+    const minZoom = 0.5;
+    const maxZoom = 4;
+
+    let newZoom = isZoomIn 
+      ? Math.min(currentZoom + zoomStep, maxZoom)
+      : Math.max(currentZoom - zoomStep, minZoom);
+
+    newZoom = Math.round(newZoom * 100) / 100;
+
+    // Berechne Scroll-Position
+    const currentScrollLeft = container.scrollLeft;
+    const currentScrollTop = container.scrollTop;
+
+    // Maus-Position in Container
+    const rect = container.getBoundingClientRect();
+    const mouseXinContainer = e.clientX - rect.left;
+    const mouseYinContainer = e.clientY - rect.top;
+
+    // Scroll-Berechnung
+    const zoomFactor = newZoom / currentZoom;
+    const newScrollLeft = (currentScrollLeft + mouseXinContainer) * zoomFactor - mouseXinContainer;
+    const newScrollTop = (currentScrollTop + mouseYinContainer) * zoomFactor - mouseYinContainer;
+
+    // Wende Zoom an
+    canvas.style.transform = `scale(${newZoom})`;
+    canvas.style.transformOrigin = 'top left';
+
+    // Setze Scroll
+    container.scrollLeft = newScrollLeft;
+    container.scrollTop = newScrollTop;
+
+    // Update Zoom
+    data.zoom = newZoom;
+
+    // Zeige Zoom-Level
+    showZoomLevel(newZoom);
+
+    return false;
+  }, { passive: false });
+
+  /**
+   * Zeige Zoom-Level Anzeige
+   */
+  function showZoomLevel(zoomLevel) {
+    let display = document.querySelector('[data-zoom-display="true"]');
+    
+    if (!display) {
+      display = document.createElement('div');
+      display.setAttribute('data-zoom-display', 'true');
+      display.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.85);
+        color: white;
+        padding: 10px 16px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: 600;
+        z-index: 5000;
+        pointer-events: none;
+        font-family: monospace;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      `;
+      document.body.appendChild(display);
+    }
+
+    const zoomPercent = Math.round(zoomLevel * 100);
+    display.textContent = `Zoom: ${zoomPercent}%`;
+
+    clearTimeout(display._timeout);
+    display._timeout = setTimeout(() => {
+      display.style.opacity = '0';
+      display.style.transition = 'opacity 0.3s';
+      setTimeout(() => {
+        if (display.parentNode) display.remove();
+      }, 300);
+    }, 1500);
+  }
+
+  /**
+   * Double-Click = Reset auf 100%
+   */
+  document.addEventListener('dblclick', (e) => {
+    if (e.target.tagName !== 'CANVAS') return;
+
+    const canvas = e.target;
+    if (!zoomData.has(canvas)) return;
+
+    e.preventDefault();
+
+    const data = zoomData.get(canvas);
+    const container = canvas.closest('.pdf-container');
+
+    data.zoom = 1;
+    canvas.style.transform = 'scale(1)';
+    container.scrollLeft = 0;
+    container.scrollTop = 0;
+
+    showZoomLevel(1);
+  });
+
+  /**
+   * Starte Initialisierung
+   */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupCanvasZoom);
+  } else {
+    setupCanvasZoom();
+  }
+})();
+
+
+
+
+
+
