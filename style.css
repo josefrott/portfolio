@@ -488,7 +488,10 @@ box3 img {
 /* text */
 text {
     grid-area: text;
-    text-align: left;
+    text-align: justify; /* Blocksatz statt linksbündig */
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
 }
 
 text h1 {
@@ -496,16 +499,26 @@ text h1 {
         24px/1 Mark W01 Bold,
         sans-serif;
     margin: 0;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    text-align: left; /* Überschriften bleiben linksbündig */
 }
 
 text section {
     font-size: 16px;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
 }
+
 text sec {
     font-weight: bold;
 }
+
 .english {
     color: #a1a1a0;
+    hyphens: manual;
 }
 
 /* ============================================
