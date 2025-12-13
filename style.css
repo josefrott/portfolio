@@ -31,7 +31,9 @@ body {
     padding: 0;
     width: 100%;
     overflow-x: hidden;
-    font: 16px/1.5 "Mark W01 Regular", sans-serif;
+    font:
+        16px/1.5 "Mark W01 Regular",
+        sans-serif;
     color: #000;
     background: #fff;
     text-align: center;
@@ -238,7 +240,7 @@ footer li {
 /* Footer image styling */
 footer img {
     width: 26px;
-    margin: 0 13px;
+    
     transition: 0.2s ease;
     will-change: transform, opacity;
 }
@@ -369,7 +371,9 @@ text {
 }
 
 text h1 {
-    font: 24px/1 "Mark W01 Bold", sans-serif;
+    font:
+        24px/1 "Mark W01 Bold",
+        sans-serif;
     margin: 0;
 }
 
@@ -741,14 +745,6 @@ footer.footer-light a:hover {
         padding: 0;
     }
 
-    header img {
-        width: 62.4px;
-    }
-
-    header li {
-        padding: 0 7.8px;
-    }
-
     /* Footer responsive adjustments */
     footer {
         height: 156px;
@@ -758,12 +754,7 @@ footer.footer-light a:hover {
 
     footer section,
     footer nav {
-        padding: 15.6px;
-    }
-
-    footer img {
-        width: 31.2px;
-        margin: 0 7.8px;
+        padding: 12px;
     }
 
     /* Show centered overlay text on mobile */
