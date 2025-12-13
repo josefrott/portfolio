@@ -222,6 +222,8 @@ header nav ul {
 header a {
     color: #808080;
     text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
     transition: 0.2s ease;
 }
 
@@ -302,7 +304,14 @@ footer.footer-light a:hover {
     color: #000;
 }
 
+/* nested & nested2 */
+.nested img {
+    margin: 26px;
+}
 
+.nested2 img {
+    padding: 13 px;
+}
 
 /* links */
 header a,
@@ -488,7 +497,7 @@ box3 img {
 /* text */
 text {
     grid-area: text;
-    text-align: justify; /* Blocksatz statt linksbündig */
+    text-align: justify;
     hyphens: auto;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
@@ -499,210 +508,108 @@ text h1 {
         24px/1 Mark W01 Bold,
         sans-serif;
     margin: 0;
-    hyphens: auto;
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    text-align: left; /* Überschriften bleiben linksbündig */
 }
 
 text section {
-    font-size: 16px;
-    hyphens: auto;
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
+    font-size: 14px;
 }
-
 text sec {
     font-weight: bold;
 }
-
 .english {
     color: #a1a1a0;
-    hyphens: manual;
 }
 
-/* ============================================
-PDF Container Styles
-============================================ */
+/* PDF Container Styles */
 
 .pdf-wrapper:nth-of-type(1) {
-grid-area: box1;
+    grid-area: box1;
 }
 
 .pdf-wrapper:nth-of-type(2) {
-grid-area: box2;
+    grid-area: box2;
 }
 
 .pdf-wrapper:nth-of-type(3) {
-grid-area: box3;
+    grid-area: box3;
 }
 
 .pdf-container {
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border-radius: 6px;
-  overflow: auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 6px;
+    overflow: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .pdf-controls {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 12px;
-background: #f5f5f5;
-border-bottom: 1px solid #ddd;
-gap: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    gap: 12px;
 }
 
 .pdf-page-info {
-font-size: 14px;
-color: #333;
-font-weight: 500;
-flex: 1;
-text-align: center;
-white-space: nowrap;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
 }
 
 .pdf-prev-btn,
 .pdf-next-btn {
-padding: 8px 16px;
-background: #000;
-color: #fff;
-border: none;
-border-radius: 6px;
-cursor: pointer;
-font-size: 12px;
-font-weight: bold;
-transition: all 0.2s ease;
-flex-shrink: 0;
-font-family: "Mark W01 Regular", sans-serif;
+    padding: 8px 16px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    font-family: "Mark W01 Regular", sans-serif;
 }
 
 .pdf-prev-btn:hover,
 .pdf-next-btn:hover {
-filter: brightness(0.8);
-transform: scale(1.05);
+    filter: brightness(0.8);
+    transform: scale(1.05);
 }
 
 .pdf-prev-btn:active,
 .pdf-next-btn:active {
-transform: scale(0.98);
+    transform: scale(0.98);
 }
 
 .pdf-prev-btn:disabled,
 .pdf-next-btn:disabled {
-background: #808080;
-cursor: not-allowed;
+    background: #808080;
+    cursor: not-allowed;
 }
 
 .pdf-canvas {
-flex: 1;
-margin: 0 auto;
-display: block;
-max-width: 100%;
-height: auto;
-min-height: 400px;
-}
-
-/* Tablet (≤ 1024px) */
-@media (max-width: 1024px) {
-  .pdf-canvas {
-    min-height: 350px;
-  }
-
-  .pdf-prev-btn,
-  .pdf-next-btn {
-    padding: 8px 12px;
-    font-size: 11px;
-  }
-}
-
-/* Small Tablet / Large Mobile (≤ 768px) */
-@media (max-width: 768px) {
-  .pdf-controls {
-    padding: 10px;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .pdf-page-info {
-    font-size: 12px;
-    flex-basis: 100%;
-    order: 3;
-  }
-
-  .pdf-prev-btn,
-  .pdf-next-btn {
-    padding: 6px 12px;
-    font-size: 11px;
     flex: 1;
-  }
-
-  .pdf-canvas {
-    min-height: 300px;
-  }
-}
-
-/* Mobile (≤ 480px) */
-@media (max-width: 480px) {
-  .pdf-controls {
-    padding: 8px;
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .pdf-page-info {
-    font-size: 11px;
-    flex-basis: 100%;
-    order: 3;
-    margin-top: 8px;
-  }
-
-  .pdf-prev-btn,
-  .pdf-next-btn {
-    padding: 6px 10px;
-    font-size: 10px;
-    flex: 1;
-    min-width: 70px;
-  }
-
-  .pdf-canvas {
-    min-height: 250px;
-  }
-
-/* Extra Small Mobile (≤ 360px) */
-@media (max-width: 360px) {
-  .pdf-controls {
-    padding: 6px;
-    gap: 4px;
-  }
-
-  .pdf-prev-btn,
-  .pdf-next-btn {
-    padding: 5px 8px;
-    font-size: 9px;
-    min-width: 60px;
-  }
-
-  .pdf-page-info {
-    font-size: 10px;
-  }
-
-  .pdf-canvas {
-    min-height: 200px;
-  }
+    margin: 0 auto;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    min-height: 400px;
 }
 
 /* ============================================
    Media Queries
    ============================================ */
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 768px) {
     html {
         overflow-x: hidden;
         width: 100%;
@@ -814,7 +721,9 @@ min-height: 400px;
 
     /* header */
     header {
+        height: 156px;
         grid-template-columns: 1fr;
+        padding: 0 12px;
         box-sizing: border-box;
     }
 
@@ -828,8 +737,34 @@ min-height: 400px;
         padding: 0;
     }
 
+    header img {
+        width: 62.4px;
+    }
+
+    header li {
+        padding: 0 7.8px;
+    }
+
+    /* footer */
+    footer {
+        height: 156px;
+        padding: 0 12px;
+        box-sizing: border-box;
+    }
+
+    footer section,
+    footer nav {
+        padding: 15.6px;
+    }
+
+    footer img {
+        width: 31.2px;
+        margin: 0 7.8px;
+    }
+
     /* container */
     .centered {
+        font-weight: bold;
         opacity: 1;
     }
 
@@ -855,6 +790,32 @@ min-height: 400px;
     }
 
     text p {
-        font-weight: 600;
-    }    
+        font-weight: bold;
+    }
+
+    /* PDF Container Styles */
+    @media (max-width: 768px) {
+        .pdf-controls {
+            padding: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .pdf-page-info {
+            font-size: 12px;
+            flex-basis: 100%;
+            order: 3;
+        }
+
+        .pdf-prev-btn,
+        .pdf-next-btn {
+            padding: 6px 12px;
+            font-size: 11px;
+            flex: 1;
+        }
+
+        .pdf-canvas {
+            min-height: 300px;
+        }
+    }
 }
