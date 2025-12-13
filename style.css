@@ -39,7 +39,16 @@ body {
     text-align: center;
 }
 
-/* Heading hierarchy */
+/* Heading hierarchy - efficient version */
+body h1,
+body h2,
+body h3 {
+    text-align: left !important;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+}
+
 body h1 {
     font-size: 1.25rem;
 }
