@@ -185,7 +185,7 @@ header img {
 }
 
 header img:hover {
-    opacity: 0.2;
+    opacity: 0.5;
     transform: scale(1.1);
     will-change: transform, opacity;
 }
@@ -217,7 +217,7 @@ footer {
     justify-content: center;
 }
 
-footer .nested2 {
+footer .nested {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -255,7 +255,7 @@ footer img {
 }
 
 footer img:hover {
-    opacity: 0.2;
+    opacity: 0.5;
     transform: scale(1.1);
 }
 
@@ -281,11 +281,8 @@ footer.footer-light a:hover {
 }
 
 /* Nested image spacing */
-.nested img {
-    margin: 26px;
-}
 
-.nested2 img {
+.nested img {
     padding: 13px;
 }
 
