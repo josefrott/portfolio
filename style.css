@@ -302,6 +302,10 @@ box {
     transition: z-index 0.2s ease;
 }
 
+box h1 {
+    text-align: center !important;
+}
+
 box img {
     width: 100%;
     height: auto;
