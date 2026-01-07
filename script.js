@@ -53,28 +53,31 @@ Schützt alle Bilder & PDFs vor Right-Click Download
   }, true); 
 
   /**
-   * Zeige Schutz-Nachricht
-   */
-  function showProtectionMessage(event) {
-    const message = document.createElement('div');
-    message.textContent = '© 2025 Josef Rott';
-    message.style.cssText = `
-      position: fixed;
-      left: ${event.clientX}px;
-      top: ${event.clientY}px;
-      background: rgba(0, 0, 0, 0.9);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-size: 12px;
-      pointer-events: none;
-      z-index: 10000;
-      animation: fadeOut 2s ease-out forwards;
-      font-weight: 500;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    `;
+ * Zeige Schutz-Nachricht
+ */
+function showProtectionMessage(event) {
+  const currentYear = new Date().getFullYear();
+  const message = document.createElement('div');
+  message.textContent = `© ${currentYear} Josef Rott`;
+  message.style.cssText = `
+    position: fixed;
+    left: ${event.clientX}px;
+    top: ${event.clientY}px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 10000;
+    animation: fadeOut 2s ease-out forwards;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  `;
 
-    document.body.appendChild(message);
+  document.body.appendChild(message);
+}
+
 
     // Füge Animation einmalig hinzu
     if (!document.querySelector('style[data-protection="true"]')) {
