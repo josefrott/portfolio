@@ -116,10 +116,6 @@ body h3 {
         "box    box    box" auto
         "box    box    box" auto
         "box    box    box" auto
-        "box    box    box" auto
-        "box    box    box" auto
-        "box    box    box" auto
-        "box    box    box" auto
         "footer footer footer" auto
         / 1fr 1fr 1fr;
 }
@@ -690,17 +686,6 @@ footer.footer-light a:hover {
     #contentKlimadesign {
         grid-template-areas:
             "header"
-            "box"
-            "box"
-            "box"
-            "box"
-            "box"
-            "box"
-            "box"
-            "box"
-            "box"
-            "box"
-            "box"
             "box"
             "box"
             "box"
