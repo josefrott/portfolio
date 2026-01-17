@@ -335,7 +335,7 @@ box:hover {
 }
 
 box:hover .background {
-    transform: scale(1);
+    transform: scale(1.1);
     filter: brightness(20%);
 }
 
@@ -420,7 +420,7 @@ text sec {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%);
     color: #fff;
     font-size: 24px;
     font-weight: 600;
@@ -434,7 +434,7 @@ text sec {
         0px 2px 0px #000,
         -2px 0px 0px #000,
         2px 0px 0px #000;
-    opacity: 1;
+    opacity: 0;
     transition:
         opacity 0.2s ease,
         transform 0.2s ease;
@@ -442,7 +442,7 @@ text sec {
 
 box:hover .centered {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1.1);
 }
 
 /* ============================================
@@ -545,8 +545,8 @@ footer.footer-light a:hover {
 }
 
 /* ============================================
-   PDF VIEWER STYLES
-   ============================================ */
+PDF VIEWER STYLES
+============================================ */
 
 .pdf-wrapper:nth-of-type(1) {
     grid-area: box1;
@@ -569,9 +569,9 @@ footer.footer-light a:hover {
     border-radius: 6px;
     overflow: auto;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    -webkit-overflow-scrolling: touch;
 }
 
-/* PDF controls bar */
 .pdf-controls {
     display: flex;
     justify-content: space-between;
@@ -580,6 +580,7 @@ footer.footer-light a:hover {
     background: #f5f5f5;
     border-bottom: 1px solid #ddd;
     gap: 12px;
+    flex-shrink: 0;
 }
 
 .pdf-page-info {
@@ -589,9 +590,10 @@ footer.footer-light a:hover {
     flex: 1;
     text-align: center;
     white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-/* PDF navigation buttons */
 .pdf-prev-btn,
 .pdf-next-btn {
     padding: 8px 16px;
@@ -605,6 +607,9 @@ footer.footer-light a:hover {
     transition: all 0.2s ease;
     flex-shrink: 0;
     font-family: "Mark W01 Regular", sans-serif;
+    will-change: transform, filter;
+    backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .pdf-prev-btn:hover,
@@ -622,9 +627,9 @@ footer.footer-light a:hover {
 .pdf-next-btn:disabled {
     background: #808080;
     cursor: not-allowed;
+    opacity: 0.5;
 }
 
-/* PDF canvas display */
 .pdf-canvas {
     flex: 1;
     margin: 0 auto;
@@ -632,6 +637,8 @@ footer.footer-light a:hover {
     max-width: 100%;
     height: auto;
     min-height: 400px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 /* ============================================
@@ -766,7 +773,7 @@ footer.footer-light a:hover {
     /* Show centered overlay text on mobile */
     .centered {
         font-weight: bold;
-        opacity: ;
+        opacity: 1;
     }
 
     /* Box styling adjustments */

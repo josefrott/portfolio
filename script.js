@@ -5,8 +5,8 @@ Sanfte Skalierung basierend auf Viewport-Zentrierposition
 
 // Startet SOFORT beim laden
 document.addEventListener('DOMContentLoaded', function() {
-    // Wähle ALLE box-Elemente statt nur box1, box2, box3
-    const boxes = document.querySelectorAll('box, box1, box2, box3');
+    // Wähle box1, box2, box3
+    const boxes = document.querySelectorAll('box1, box2, box3');
     
     console.log('Gefundene Boxen:', boxes.length);
     
