@@ -177,14 +177,19 @@ header li {
 /* Header logo styling */
 header img {
     width: 52px;
-    transition: 0.2s ease;
+    height: 52px;
+    object-fit: contain;
+    
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    will-change: transform, opacity;
+    transform-origin: center center;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 header img:hover {
     opacity: 0.5;
-    transform: scale(1.1);
-    will-change: transform, opacity;
-    transform-origin: center;
+    transform: scale(1.1) translateZ(0);
 }
 
 /* Header links */
@@ -246,14 +251,19 @@ footer li {
 /* Footer image styling */
 footer img {
     width: 26px;
-    transition: 0.2s ease;
+    height: 26px;
+    object-fit: contain;
+    
+    transition: opacity 0.2s ease, transform 0.2s ease;
     will-change: transform, opacity;
-    transform-origin: center;
+    transform-origin: center center;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 footer img:hover {
     opacity: 0.5;
-    transform: scale(1.1);
+    transform: scale(1.1) translateZ(0);
 }
 
 /* Footer links */
