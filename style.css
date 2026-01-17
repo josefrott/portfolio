@@ -1,6 +1,6 @@
 /* ============================================
-   FONTS
-   ============================================ */
+FONTS
+============================================ */
 
 @font-face {
     font-family: "Mark W01 Regular";
@@ -23,23 +23,28 @@
 }
 
 /* ============================================
-   BASE STYLES
-   ============================================ */
+BASE STYLES
+============================================ */
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 body {
     margin: 0;
     padding: 0;
     width: 100%;
     overflow-x: hidden;
-    font:
-        16px/1.5 "Mark W01 Regular",
-        sans-serif;
+    font: 16px/1.5 "Mark W01 Regular", sans-serif;
     color: #000;
     background: #fff;
     text-align: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Heading hierarchy - efficient version */
+/* Heading hierarchy */
 body h1,
 body h2,
 body h3 {
@@ -62,10 +67,9 @@ body h3 {
 }
 
 /* ============================================
-   GRID LAYOUTS
-   ============================================ */
+GRID LAYOUTS
+============================================ */
 
-/* Three-column grid template for consistent spacing */
 #contentImpressum,
 #contentIndex,
 #contentArchitektur,
@@ -80,8 +84,8 @@ body h3 {
 #contentImpressum {
     grid-template:
         "header header header" auto
-        "text    text    text" auto
-        "footer  footer  footer" auto
+        "text text text" auto
+        "footer footer footer" auto
         / 1fr 1fr 1fr;
 }
 
@@ -89,8 +93,8 @@ body h3 {
     color: #fff;
     grid-template:
         "header header header" auto
-        "box    box    box" auto
-        "box    box    box" auto
+        "box box box" auto
+        "box box box" auto
         "footer footer footer" auto
         / 1fr 1fr 1fr;
 }
@@ -98,9 +102,9 @@ body h3 {
 #contentArchitektur {
     grid-template:
         "header header header" auto
-        "box    box    box" auto
-        "box    box    box" auto
-        "box    box    box" auto
+        "box box box" auto
+        "box box box" auto
+        "box box box" auto
         "footer footer footer" auto
         / 1fr 1fr 1fr;
 }
@@ -108,14 +112,14 @@ body h3 {
 #contentKlimadesign {
     grid-template:
         "header header header" auto
-        "box    box    box" auto
-        "box    box    box" auto
-        "box    box    box" auto
-        "box    box    box" auto
-        "box    box    box" auto
-        "box    box    box" auto
-        "box    box    box" auto
-        "box    box    box" auto
+        "box box box" auto
+        "box box box" auto
+        "box box box" auto
+        "box box box" auto
+        "box box box" auto
+        "box box box" auto
+        "box box box" auto
+        "box box box" auto
         "footer footer footer" auto
         / 1fr 1fr 1fr;
 }
@@ -123,19 +127,19 @@ body h3 {
 #contentPage {
     grid-template:
         "header header header" auto
-        "box1   box1   text" auto
-        "box1   box1   text" auto
-        "box2   box2   text" auto
-        "box2   box2   text" auto
-        "box3   box3   text" auto
-        "box3   box3   text" auto
+        "box1 box1 text" auto
+        "box1 box1 text" auto
+        "box2 box2 text" auto
+        "box2 box2 text" auto
+        "box3 box3 text" auto
+        "box3 box3 text" auto
         "footer footer footer" auto
         / 1fr 1fr 1fr;
 }
 
 /* ============================================
-   HEADER & NAVIGATION
-   ============================================ */
+HEADER & NAVIGATION
+============================================ */
 
 header {
     grid-area: header;
@@ -146,14 +150,12 @@ header {
     gap: 12px;
 }
 
-/* Logo positioning */
 header > div:nth-child(1) a {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Navigation menu */
 header > nav {
     display: flex;
     justify-content: center;
@@ -174,12 +176,10 @@ header li {
     padding: 0 6px;
 }
 
-/* Header logo styling */
 header img {
     width: 52px;
     height: 52px;
     object-fit: contain;
-    
     transition: opacity 0.2s ease, transform 0.2s ease;
     will-change: transform, opacity;
     transform-origin: center center;
@@ -192,7 +192,6 @@ header img:hover {
     transform: scale(1.1) translateZ(0);
 }
 
-/* Header links */
 header a {
     color: #808080;
     text-decoration: none;
@@ -207,8 +206,8 @@ header .current a {
 }
 
 /* ============================================
-   FOOTER
-   ============================================ */
+FOOTER
+============================================ */
 
 footer {
     grid-area: footer;
@@ -248,12 +247,10 @@ footer li {
     padding: 0 6px;
 }
 
-/* Footer image styling */
 footer img {
     width: 26px;
     height: 26px;
     object-fit: contain;
-    
     transition: opacity 0.2s ease, transform 0.2s ease;
     will-change: transform, opacity;
     transform-origin: center center;
@@ -263,10 +260,9 @@ footer img {
 
 footer img:hover {
     opacity: 0.5;
-    transform: scale(1.2) translateZ(0);
+    transform: scale(1.1) translateZ(0);
 }
 
-/* Footer links */
 footer a {
     color: #808080;
     text-decoration: none;
@@ -287,17 +283,14 @@ footer.footer-light a:hover {
     color: #000;
 }
 
-/* Nested image spacing */
-
 .nested img {
     padding: 13px;
 }
 
 /* ============================================
-   BOX COMPONENTS
-   ============================================ */
+BOX COMPONENTS - OPTIMIERT FÜR ALLE GERÄTE
+============================================ */
 
-/* Standard box grid item */
 box {
     max-width: 312px;
     height: 312px;
@@ -306,7 +299,9 @@ box {
     position: relative;
     z-index: 1;
     overflow: visible;
-    transition: z-index 0.2s ease;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 box h1 {
@@ -316,26 +311,23 @@ box h1 {
 box img {
     width: 100%;
     height: auto;
+    backface-visibility: hidden;
 }
 
-/* Box background and hover effects */
+/* Box background - mit brightness aber OHNE scale */
 .background {
     height: 312px;
     background: #fff;
     display: grid;
     place-items: center;
     border-radius: 6px;
-    transition:
-        transform 0.2s ease,
-        filter 0.2s ease;
-}
-
-box:hover {
-    z-index: 100;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    transition: filter 0.2s ease;
+    will-change: filter;
 }
 
 box:hover .background {
-    transform: scale(1);
     filter: brightness(20%);
 }
 
@@ -344,78 +336,7 @@ box a {
     text-decoration: none;
 }
 
-/* Large box variants (box1, box2, box3) */
-box1,
-box2,
-box3 {
-    height: 636px;
-    display: grid;
-    place-items: center;
-    position: relative;
-    overflow: visible;
-    z-index: 1;
-}
-
-box1 {
-    grid-area: box1;
-}
-
-box2 {
-    grid-area: box2;
-}
-
-box3 {
-    grid-area: box3;
-}
-
-box1 img,
-box2 img,
-box3 img {
-    width: 100%;
-    border-radius: 6px;
-}
-
-/* ============================================
-   TEXT CONTENT & TYPOGRAPHY
-   ============================================ */
-
-text {
-    grid-area: text;
-    text-align: justify;
-    hyphens: auto;
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-}
-
-text h1 {
-    font:
-        24px/1 "Mark W01 Bold",
-        sans-serif;
-    margin: 0;
-}
-
-text section {
-    font-size: 14px;
-}
-
-text sec {
-    font-weight: bold;
-}
-
-.english {
-    color: #a1a1a0;
-}
-
-/* ============================================
-   CONTAINER & CENTERED OVERLAY
-   ============================================ */
-
-.container {
-    position: relative;
-    text-align: center;
-}
-
-/* Centered text overlay with text-shadow outline */
+/* Centered overlay text */
 .centered {
     position: absolute;
     top: 50%;
@@ -435,25 +356,109 @@ text sec {
         -2px 0px 0px #000,
         2px 0px 0px #000;
     opacity: 0;
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    will-change: opacity, transform;
 }
 
-box:hover .centered {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+/* Nur auf Desktop: Centered anzeigen und skalieren */
+@media screen and (min-width: 769px) {
+    box:hover .centered {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+/* Auf Mobile: Centered verstecken */
+@media screen and (max-width: 768px) {
+    .centered {
+        display: none;
+    }
+}
+
+/* Large box variants (box1, box2, box3) */
+box1,
+box2,
+box3 {
+    height: 636px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: visible;
+    z-index: 1;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+box1 {
+    grid-area: box1;
+}
+
+box2 {
+    grid-area: box2;
+}
+
+box3 {
+    grid-area: box3;
+}
+
+box1 img,
+box2 img,
+box3 img {
+    width: 100%;
+    border-radius: 6px;
+    backface-visibility: hidden;
 }
 
 /* ============================================
-   ANIMATION
-   ============================================ */
+TEXT CONTENT & TYPOGRAPHY
+============================================ */
+
+text {
+    grid-area: text;
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+}
+
+text h1 {
+    font: 24px/1 "Mark W01 Bold", sans-serif;
+    margin: 0;
+}
+
+text section {
+    font-size: 14px;
+}
+
+text sec {
+    font-weight: bold;
+}
+
+.english {
+    color: #a1a1a0;
+}
+
+/* ============================================
+CONTAINER & CENTERED OVERLAY
+============================================ */
+
+.container {
+    position: relative;
+    text-align: center;
+}
+
+/* ============================================
+ANIMATION
+============================================ */
 
 @keyframes fadeInUp {
     from {
         transform: translateY(40px);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;
@@ -479,10 +484,9 @@ box:hover .centered {
 }
 
 /* ============================================
-   THEME VARIANTS
-   ============================================ */
+THEME VARIANTS
+============================================ */
 
-/* Light theme override for index pages */
 .index-light * {
     color: #fff !important;
 }
@@ -495,17 +499,9 @@ box:hover .centered {
     color: #fff !important;
 }
 
-footer.footer-light a {
-    color: #fff;
-}
-
-footer.footer-light a:hover {
-    color: #000;
-}
-
 /* ============================================
-   LINK STYLING
-   ============================================ */
+LINK STYLING
+============================================ */
 
 .link {
     color: #808080;
@@ -518,8 +514,8 @@ footer.footer-light a:hover {
 }
 
 /* ============================================
-   BUTTON STYLING
-   ============================================ */
+BUTTON STYLING
+============================================ */
 
 .download-btn {
     display: inline-flex;
@@ -545,8 +541,8 @@ footer.footer-light a:hover {
 }
 
 /* ============================================
-   PDF VIEWER STYLES
-   ============================================ */
+PDF VIEWER STYLES
+============================================ */
 
 .pdf-wrapper:nth-of-type(1) {
     grid-area: box1;
@@ -605,6 +601,7 @@ footer.footer-light a:hover {
     transition: all 0.2s ease;
     flex-shrink: 0;
     font-family: "Mark W01 Regular", sans-serif;
+    backface-visibility: hidden;
 }
 
 .pdf-prev-btn:hover,
@@ -632,17 +629,20 @@ footer.footer-light a:hover {
     max-width: 100%;
     height: auto;
     min-height: 400px;
+    backface-visibility: hidden;
 }
 
 /* ============================================
-   MEDIA QUERIES - TABLET & MOBILE
-   ============================================ */
+TABLET & MOBILE STYLES (max-width: 768px)
+============================================ */
 
 @media screen and (max-width: 768px) {
     html {
         overflow-x: hidden;
         width: 100%;
         max-width: 100vw;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     body {
@@ -651,6 +651,8 @@ footer.footer-light a:hover {
         max-width: 100vw;
         margin: 0;
         padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     /* Convert all grid layouts to single column */
@@ -761,12 +763,6 @@ footer.footer-light a:hover {
     footer section,
     footer nav {
         padding: 12px;
-    }
-
-    /* Show centered overlay text on mobile */
-    .centered {
-        font-weight: bold;
-        opacity: 1;
     }
 
     /* Box styling adjustments */
