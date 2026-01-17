@@ -184,6 +184,7 @@ header img:hover {
     opacity: 0.5;
     transform: scale(1.1);
     will-change: transform, opacity;
+    transform-origin: center;
 }
 
 /* Header links */
@@ -245,9 +246,9 @@ footer li {
 /* Footer image styling */
 footer img {
     width: 26px;
-    
     transition: 0.2s ease;
     will-change: transform, opacity;
+    transform-origin: center;
 }
 
 footer img:hover {
