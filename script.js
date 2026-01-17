@@ -1,12 +1,18 @@
+/* ============================================
+SCROLL ZOOM EFFEKT
+Sanfte Skalierung basierend auf Viewport-Zentrierposition
+============================================ */
+
 // Startet SOFORT beim laden
 document.addEventListener('DOMContentLoaded', function() {
-    const boxes = document.querySelectorAll('box1, box2, box3');
+    // Wähle ALLE box-Elemente statt nur box1, box2, box3
+    const boxes = document.querySelectorAll('box, box1, box2, box3');
     
     console.log('Gefundene Boxen:', boxes.length);
     
     if (boxes.length === 0) {
         console.warn('Keine Boxen gefunden! Suche nach Klassennamen...');
-        const boxes2 = document.querySelectorAll('[class*="box1"], [class*="box2"], [class*="box3"]');
+        const boxes2 = document.querySelectorAll('[class*="box"]');
         if (boxes2.length > 0) {
             setupScrollZoom(boxes2);
         }
@@ -42,7 +48,7 @@ function setupScrollZoom(boxes) {
             const normalizedDistance = Math.min(distanceFromCenter / maxDistance, 1);
             
             // Scale: 1.0 (im Fokus/zentriert) bis 0.8 (außerhalb)
-            const scale = 1.0 - (normalizedDistance * 0.2);
+            const scale = 1.0 - (normalizedDistance * 0.1);
             
             box.style.transform = `scale(${scale.toFixed(3)})`;
         });

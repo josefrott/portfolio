@@ -335,7 +335,7 @@ box:hover {
 }
 
 box:hover .background {
-    transform: scale(1.1);
+    transform: scale(1);
     filter: brightness(20%);
 }
 
@@ -442,7 +442,7 @@ text sec {
 
 box:hover .centered {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1);
 }
 
 /* ============================================
