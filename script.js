@@ -1,11 +1,21 @@
 /* ============================================
 SCROLL ZOOM EFFEKT
 Sanfte Skalierung basierend auf Viewport-Zentrierposition
+(NUR auf Desktop - Mobile für Performance deaktiviert)
 ============================================ */
 
 // Startet SOFORT beim laden
 document.addEventListener('DOMContentLoaded', function() {
-    // Wähle box1, box2, box3
+    // Erkenne Mobile-Geräte ZUERST
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    // ❌ Auf Mobile: Scroll-Zoom komplett deaktivieren
+    if (isMobile) {
+        console.log('✓ Scroll-Zoom auf Mobile deaktiviert (bessere Performance)');
+        return;
+    }
+    
+    // ✅ Nur auf Desktop: Wähle box1, box2, box3
     const boxes = document.querySelectorAll('box, box1, box2, box3');
     
     console.log('Gefundene Boxen:', boxes.length);
@@ -23,23 +33,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function setupScrollZoom(boxes) {
-    // Erkenne Mobile-Geräte
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    
-    // CSS-Optimierungen - Adaptive je nach Gerät
+    // CSS-Optimierungen für Desktop
     boxes.forEach(box => {
         box.style.transition = 'transform 0.4s ease-out';
         box.style.transformOrigin = 'center center';
         box.style.willChange = 'transform';
         box.style.backfaceVisibility = 'hidden';
-        
-        if (isMobile) {
-            // Mobile: GPU-Beschleunigung
-            box.style.perspective = '1000px';
-        }
     });
     
     let scrollTimeout;
+    let lastScale = new Map();
     
     function updateZoom() {
         const viewportHeight = window.innerHeight;
@@ -58,16 +61,17 @@ function setupScrollZoom(boxes) {
             
             // Scale: 1.0 (im Fokus/zentriert) bis 0.8 (außerhalb)
             const scale = 1.0 - (normalizedDistance * 0.2);
+            const scaleValue = scale.toFixed(3);
             
-            // Desktop: Volle Präzision (3 Dezimalstellen)
-            // Mobile: Leicht reduziert für Performance (2 Dezimalstellen)
-            const scaleValue = isMobile ? scale.toFixed(2) : scale.toFixed(3);
-            box.style.transform = `scale(${scaleValue})`;
+            // Nur ändern wenn Scale sich tatsächlich geändert hat
+            if (lastScale.get(box) !== scaleValue) {
+                box.style.transform = `scale(${scaleValue})`;
+                lastScale.set(box, scaleValue);
+            }
         });
     }
     
     // Mit RequestAnimationFrame für beste Performance
-    // Wichtig: Direkt requestAnimationFrame verwenden, nicht throttlen!
     window.addEventListener('scroll', () => {
         if (scrollTimeout) {
             cancelAnimationFrame(scrollTimeout);
