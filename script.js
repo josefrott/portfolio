@@ -23,13 +23,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function setupScrollZoom(boxes) {
+    // Erkenne Mobile-Geräte
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
     // CSS-Transition für sanfte Animation
     boxes.forEach(box => {
         box.style.transition = 'transform 0.4s ease-out';
         box.style.transformOrigin = 'center center';
+        // GPU-Beschleunigung für Mobile
+        box.style.willChange = 'transform';
+        box.style.backfaceVisibility = 'hidden';
+        box.style.perspective = '1000px';
     });
     
     let scrollTimeout;
+    let lastUpdateTime = 0;
+    const updateThrottle = isMobile ? 50 : 16; // 50ms für Mobile, 16ms für Desktop
     
     function updateZoom() {
         const viewportHeight = window.innerHeight;
@@ -50,16 +59,28 @@ function setupScrollZoom(boxes) {
             // Scale: 1.0 (im Fokus/zentriert) bis 0.8 (außerhalb)
             const scale = 1.0 - (normalizedDistance * 0.2);
             
-            box.style.transform = `scale(${scale.toFixed(3)})`;
+            // Runde auf 2 Dezimalstellen statt 3 für bessere Performance
+            box.style.transform = `scale(${Math.round(scale * 100) / 100})`;
         });
     }
     
-    // Mit RequestAnimationFrame für beste Performance
+    // Mit RequestAnimationFrame UND Throttling für beste Performance
     window.addEventListener('scroll', () => {
+        const now = performance.now();
+        
         if (scrollTimeout) {
             cancelAnimationFrame(scrollTimeout);
         }
-        scrollTimeout = requestAnimationFrame(updateZoom);
+        
+        if (now - lastUpdateTime >= updateThrottle) {
+            updateZoom();
+            lastUpdateTime = now;
+        } else {
+            scrollTimeout = requestAnimationFrame(() => {
+                updateZoom();
+                lastUpdateTime = performance.now();
+            });
+        }
     }, { passive: true });
     
     // Initial ausführen
