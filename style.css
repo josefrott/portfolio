@@ -301,7 +301,6 @@ footer.footer-light a:hover {
    BOX COMPONENTS
    ============================================ */
 
-/* Standard box grid item */
 box {
     max-width: 312px;
     height: 312px;
@@ -310,7 +309,6 @@ box {
     position: relative;
     z-index: 1;
     overflow: visible;
-    transition: z-index 0.2s ease;
 }
 
 box h1 {
@@ -322,24 +320,20 @@ box img {
     height: auto;
 }
 
-/* Box background and hover effects */
 .background {
     height: 312px;
     background: #fff;
     display: grid;
     place-items: center;
     border-radius: 6px;
-    transition:
-        transform 0.2s ease,
-        filter 0.2s ease;
+    transition: filter 0.2s ease;
 }
 
-box:hover {
+/* box:hover {
     z-index: 100;
-}
+} */
 
 box:hover .background {
-    /* transform: scale(1.1); */
     filter: brightness(20%);
 }
 
@@ -348,7 +342,6 @@ box a {
     text-decoration: none;
 }
 
-/* Large box variants (box1, box2, box3) */
 box1,
 box2,
 box3 {
