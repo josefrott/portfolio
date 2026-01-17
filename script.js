@@ -28,25 +28,18 @@ function setupScrollZoom(boxes) {
     
     // CSS-Optimierungen - Adaptive je nach Gerät
     boxes.forEach(box => {
+        box.style.transition = 'transform 0.4s ease-out';
+        box.style.transformOrigin = 'center center';
+        box.style.willChange = 'transform';
+        box.style.backfaceVisibility = 'hidden';
+        
         if (isMobile) {
-            // Mobile: Aggressive GPU-Beschleunigung
-            box.style.transition = 'none';
-            box.style.transformOrigin = 'center center';
-            box.style.willChange = 'transform';
-            box.style.backfaceVisibility = 'hidden';
+            // Mobile: GPU-Beschleunigung
             box.style.perspective = '1000px';
-            box.style.contain = 'layout style paint';
-        } else {
-            // Desktop: Sanfte Transition
-            box.style.transition = 'transform 0.4s ease-out';
-            box.style.transformOrigin = 'center center';
-            box.style.willChange = 'transform';
-            box.style.backfaceVisibility = 'hidden';
         }
     });
     
     let scrollTimeout;
-    let ticking = false;
     
     function updateZoom() {
         const viewportHeight = window.innerHeight;
@@ -67,35 +60,19 @@ function setupScrollZoom(boxes) {
             const scale = 1.0 - (normalizedDistance * 0.2);
             
             // Desktop: Volle Präzision (3 Dezimalstellen)
-            // Mobile: Reduzierte Genauigkeit (20er-Schritte)
-            let scaleValue;
-            if (isMobile) {
-                scaleValue = Math.round(scale * 20) / 20;
-                box.style.transform = `translate3d(0, 0, 0) scale(${scaleValue})`;
-            } else {
-                scaleValue = scale.toFixed(3);
-                box.style.transform = `scale(${scaleValue})`;
-            }
+            // Mobile: Leicht reduziert für Performance (2 Dezimalstellen)
+            const scaleValue = isMobile ? scale.toFixed(2) : scale.toFixed(3);
+            box.style.transform = `scale(${scaleValue})`;
         });
-        
-        ticking = false;
     }
     
     // Mit RequestAnimationFrame für beste Performance
+    // Wichtig: Direkt requestAnimationFrame verwenden, nicht throttlen!
     window.addEventListener('scroll', () => {
-        if (isMobile) {
-            // Mobile: Ticking-Pattern für weniger Re-renders
-            if (!ticking) {
-                ticking = true;
-                requestAnimationFrame(updateZoom);
-            }
-        } else {
-            // Desktop: DirectRAF für maximale Smoothness
-            if (scrollTimeout) {
-                cancelAnimationFrame(scrollTimeout);
-            }
-            scrollTimeout = requestAnimationFrame(updateZoom);
+        if (scrollTimeout) {
+            cancelAnimationFrame(scrollTimeout);
         }
+        scrollTimeout = requestAnimationFrame(updateZoom);
     }, { passive: true });
     
     // Initial ausführen
