@@ -48,7 +48,7 @@ function setupScrollZoom(boxes) {
             const normalizedDistance = Math.min(distanceFromCenter / maxDistance, 1);
             
             // Scale: 1.0 (im Fokus/zentriert) bis 0.8 (außerhalb)
-            const scale = 1.0 - (normalizedDistance * 0.1);
+            const scale = 1.0 - (normalizedDistance * 0.2);
             
             box.style.transform = `scale(${scale.toFixed(3)})`;
         });
