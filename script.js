@@ -1,3 +1,65 @@
+// Startet SOFORT beim laden
+document.addEventListener('DOMContentLoaded', function() {
+    const boxes = document.querySelectorAll('box1, box2, box3');
+    
+    console.log('Gefundene Boxen:', boxes.length);
+    
+    if (boxes.length === 0) {
+        console.warn('Keine Boxen gefunden! Suche nach Klassennamen...');
+        const boxes2 = document.querySelectorAll('[class*="box1"], [class*="box2"], [class*="box3"]');
+        if (boxes2.length > 0) {
+            setupScrollZoom(boxes2);
+        }
+        return;
+    }
+    
+    setupScrollZoom(boxes);
+});
+
+function setupScrollZoom(boxes) {
+    // CSS-Transition für sanfte Animation
+    boxes.forEach(box => {
+        box.style.transition = 'transform 0.4s ease-out';
+        box.style.transformOrigin = 'center center';
+    });
+    
+    let scrollTimeout;
+    
+    function updateZoom() {
+        const viewportHeight = window.innerHeight;
+        const viewportCenter = viewportHeight / 2;
+        
+        // JEDE Box einzeln berechnen basierend auf ihrer Position
+        boxes.forEach(box => {
+            const rect = box.getBoundingClientRect();
+            const boxCenter = rect.top + rect.height / 2;
+            
+            // Wie weit ist diese Box vom Viewport-Zentrum entfernt?
+            const distanceFromCenter = Math.abs(boxCenter - viewportCenter);
+            
+            // Normalisieren: 0 = perfekt zentriert (max Zoom), 1 = ganz oben/unten (min Zoom)
+            const maxDistance = viewportHeight;
+            const normalizedDistance = Math.min(distanceFromCenter / maxDistance, 1);
+            
+            // Scale: 1.0 (im Fokus/zentriert) bis 0.8 (außerhalb)
+            const scale = 1.0 - (normalizedDistance * 0.2);
+            
+            box.style.transform = `scale(${scale.toFixed(3)})`;
+        });
+    }
+    
+    // Mit RequestAnimationFrame für beste Performance
+    window.addEventListener('scroll', () => {
+        if (scrollTimeout) {
+            cancelAnimationFrame(scrollTimeout);
+        }
+        scrollTimeout = requestAnimationFrame(updateZoom);
+    }, { passive: true });
+    
+    // Initial ausführen
+    updateZoom();
+}
+
 /* ============================================
 UNIVERSAL CONTENT PROTECTION
 Schützt alle Bilder & PDFs vor Right-Click Download
