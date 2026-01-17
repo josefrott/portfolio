@@ -26,25 +26,32 @@ function setupScrollZoom(boxes) {
     // Erkenne Mobile-Geräte
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
-    // CSS-Transition für sanfte Animation
+    // CSS-Optimierungen - Adaptive je nach Gerät
     boxes.forEach(box => {
-        box.style.transition = 'transform 0.4s ease-out';
-        box.style.transformOrigin = 'center center';
-        // GPU-Beschleunigung für Mobile
-        box.style.willChange = 'transform';
-        box.style.backfaceVisibility = 'hidden';
-        box.style.perspective = '1000px';
+        if (isMobile) {
+            // Mobile: Aggressive GPU-Beschleunigung
+            box.style.transition = 'none';
+            box.style.transformOrigin = 'center center';
+            box.style.willChange = 'transform';
+            box.style.backfaceVisibility = 'hidden';
+            box.style.perspective = '1000px';
+            box.style.contain = 'layout style paint';
+        } else {
+            // Desktop: Sanfte Transition
+            box.style.transition = 'transform 0.4s ease-out';
+            box.style.transformOrigin = 'center center';
+            box.style.willChange = 'transform';
+            box.style.backfaceVisibility = 'hidden';
+        }
     });
     
     let scrollTimeout;
-    let lastUpdateTime = 0;
-    const updateThrottle = isMobile ? 50 : 16; // 50ms für Mobile, 16ms für Desktop
+    let ticking = false;
     
     function updateZoom() {
         const viewportHeight = window.innerHeight;
         const viewportCenter = viewportHeight / 2;
         
-        // JEDE Box einzeln berechnen basierend auf ihrer Position
         boxes.forEach(box => {
             const rect = box.getBoundingClientRect();
             const boxCenter = rect.top + rect.height / 2;
@@ -59,27 +66,35 @@ function setupScrollZoom(boxes) {
             // Scale: 1.0 (im Fokus/zentriert) bis 0.8 (außerhalb)
             const scale = 1.0 - (normalizedDistance * 0.2);
             
-            // Runde auf 2 Dezimalstellen statt 3 für bessere Performance
-            box.style.transform = `scale(${Math.round(scale * 100) / 100})`;
+            // Desktop: Volle Präzision (3 Dezimalstellen)
+            // Mobile: Reduzierte Genauigkeit (20er-Schritte)
+            let scaleValue;
+            if (isMobile) {
+                scaleValue = Math.round(scale * 20) / 20;
+                box.style.transform = `translate3d(0, 0, 0) scale(${scaleValue})`;
+            } else {
+                scaleValue = scale.toFixed(3);
+                box.style.transform = `scale(${scaleValue})`;
+            }
         });
+        
+        ticking = false;
     }
     
-    // Mit RequestAnimationFrame UND Throttling für beste Performance
+    // Mit RequestAnimationFrame für beste Performance
     window.addEventListener('scroll', () => {
-        const now = performance.now();
-        
-        if (scrollTimeout) {
-            cancelAnimationFrame(scrollTimeout);
-        }
-        
-        if (now - lastUpdateTime >= updateThrottle) {
-            updateZoom();
-            lastUpdateTime = now;
+        if (isMobile) {
+            // Mobile: Ticking-Pattern für weniger Re-renders
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(updateZoom);
+            }
         } else {
-            scrollTimeout = requestAnimationFrame(() => {
-                updateZoom();
-                lastUpdateTime = performance.now();
-            });
+            // Desktop: DirectRAF für maximale Smoothness
+            if (scrollTimeout) {
+                cancelAnimationFrame(scrollTimeout);
+            }
+            scrollTimeout = requestAnimationFrame(updateZoom);
         }
     }, { passive: true });
     
